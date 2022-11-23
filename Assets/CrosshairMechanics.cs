@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CrosshairMechanics : MonoBehaviour
 {
     [SerializeField] private Sprite[] crosshairs;
     [SerializeField] private Transform pfBullet;
     private RaycastHit hitObject;
-    private float rayLength;
     private int levelLayer;
     private bool available;
     public GameObject Player;
-    public SpriteRenderer spriteRenderer; 
-    public Sprite bullet;
+    public Gunno Gunno;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
         available = true;
-        Cursor.visible = false;
+        UnityEngine.Cursor.visible = false;
         levelLayer = LayerMask.GetMask("Obstacle");
     }
     void Update()
@@ -26,46 +28,37 @@ public class CrosshairMechanics : MonoBehaviour
         Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerCurrentpos = Player.transform.position;
         transform.position = mouseCursorPos;
-        checkShootable(playerCurrentpos);
+        Vector2 diffInPos = mouseCursorPos - playerCurrentpos;
+        checkShootable(playerCurrentpos, diffInPos);
         if (Input.GetMouseButtonDown(0))
         {
-            shoot();
+            shoot(playerCurrentpos, diffInPos);
         }
     }
-    void checkShootable(Vector2 playerCurrentpos)
+    void checkShootable(Vector2 playerCurrentpos, Vector2 diffInPos)
     {
-        Debug.Log(playerCurrentpos);
-        Debug.Log(transform.position);
-        RaycastHit2D hit = Physics2D.Raycast(playerCurrentpos, transform.position, Mathf.Infinity, levelLayer);
+        RaycastHit2D hit = Physics2D.Raycast(playerCurrentpos, diffInPos, diffInPos.magnitude, levelLayer);
         if (!hit && available)
         {
-            Debug.DrawRay(playerCurrentpos, transform.position, Color.red, 0.0f);
-            Debug.Log("Shootable");
+            UnityEngine.Debug.DrawRay(playerCurrentpos, diffInPos, Color.red, 0.0f);
         }
         else if (!hit && !available)
         {
-            Debug.Log("switching to on");
             spriteRenderer.sprite = crosshairs[0];
             available = true;
         }
         else if (hit && available)
         {
-            Debug.Log("switching to off");
             spriteRenderer.sprite = crosshairs[1];
             available = false;
         }
     }
-    void shoot()
+    void shoot(Vector2 playerCurrentpos, Vector2 diffInPos)
     {
-        if (available)
-        {
-            Debug.Log("bang");
-            Debug.Log(this.transform.position);
-            Instantiate(pfBullet, this.transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.Log("click");
-        }
+        float force = 2f;
+        UnityEngine.Debug.Log("bang");
+        GameObject newBullet = Instantiate(pfBullet, playerCurrentpos, Quaternion.Euler(new Vector3(0f, 0f, Gunno.returnAng()))).GameObject();
+        Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
+        rb.AddForce(newBullet.transform.up * force, ForceMode2D.Impulse);
     }
 }
