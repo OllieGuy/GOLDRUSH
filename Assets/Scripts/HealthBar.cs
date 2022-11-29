@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    private int healthTotal;
     private int health;
-    private Sprite Bar;
+    private int maxHealth;
+    [SerializeField] private Sprite Bar;
+    private SpriteRenderer SpriteRenderer;
 
     void Update()
     {
-        //Bar.color
+        //Bar.
     }
 }
