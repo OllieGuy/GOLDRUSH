@@ -9,8 +9,8 @@ public class EnemyInvestigate : EnemyAbstract
     }
     public override void EnterState(EnemyMaster enemy, Vector2 interestedLocation)
     {
+        Debug.Log("switched to investigate");
         enemy.speed = 0.3f;
-        Debug.Log("switched to investigate 2");
         enemy.targetPos = interestedLocation;
     }
     public override void UpdateState(EnemyMaster enemy)
@@ -32,7 +32,8 @@ public class EnemyInvestigate : EnemyAbstract
     {
         if (collision.tag == "Bullet")
         {
-            Debug.Log("owww");
+            //Debug.Log("owww");
+            enemy.health--;
         }
         if (collision.tag == "Interest")
         {

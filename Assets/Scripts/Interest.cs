@@ -13,7 +13,7 @@ public class Interest : MonoBehaviour
         if(collision.tag == "Bullet")
         {
             Instantiate(pfInterestArea, obj.transform.position, Quaternion.Euler(0f,0f,0f));
-            Debug.Log("Crunch");
+            //Debug.Log("Crunch");
             Destroy(obj);
         }
     }

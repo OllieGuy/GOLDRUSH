@@ -514,7 +514,8 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0}
   anchorPoint: {fileID: 1189090875}
   player: {fileID: 2011111897}
-  healthBar: {fileID: 9046392933309403403, guid: 96be713fb65b99c49a7865da57360e94, type: 3}
+  pfHealthBar: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!212 &1452809508
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -56,7 +56,7 @@ public class CrosshairMechanics : MonoBehaviour
     void shoot(Vector2 playerCurrentpos, Vector2 diffInPos)
     {
         float force = 2f;
-        UnityEngine.Debug.Log("bang");
+        //UnityEngine.Debug.Log("bang");
         GameObject newBullet = Instantiate(pfBullet, playerCurrentpos, Quaternion.Euler(new Vector3(0f, 0f, Gunno.returnAng()))).GameObject();
         Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
         rb.AddForce(newBullet.transform.up * force, ForceMode2D.Impulse);

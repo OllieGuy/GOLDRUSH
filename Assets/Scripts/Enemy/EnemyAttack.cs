@@ -5,7 +5,7 @@ public class EnemyAttack : EnemyAbstract
 {
     public override void EnterState(EnemyMaster enemy)
     {
-
+        Debug.Log("switched to attack");
     }
     public override void EnterState(EnemyMaster enemy, Vector2 interestedLocation)
     {

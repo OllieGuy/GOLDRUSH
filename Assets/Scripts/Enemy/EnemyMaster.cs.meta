@@ -3,7 +3,11 @@ guid: ce62c5a6d3b52624f8faafedea329d88
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - anchorPoint: {instanceID: 0}
+  - player: {instanceID: 0}
+  - pfHealthBar: {fileID: 7490637409247095976, guid: 96be713fb65b99c49a7865da57360e94, type: 3}
+  - healthBar: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
