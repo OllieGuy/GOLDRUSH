@@ -20,28 +20,41 @@ public class EnemyMaster : MonoBehaviour
     public GameObject anchorPoint;
     public GameObject player;
     public GameObject pfHealthBar;
-    public HealthBar healthBar;
-    //public HealthBar healthBar;
+    public GameObject pfEnemy;
+    public GameObject healthBar;
+    public HealthBar hb;
+    [SerializeField] public Sprite[] EnemySprite1;
+    [SerializeField] public Sprite[] EnemySprite2;
+    [SerializeField] public Sprite[] EnemySprite3;
+    private int currentFrame = 0;
+    private SpriteRenderer spriteRenderer;
+    private Sprite[] framesToUse = null;
+    private float spriteTimer;
     private bool switchedToLowHealth = false;
-    // Start is called before the first frame update
     void Start()
     {
-        healthBar = Instantiate(pfHealthBar, new Vector3(transform.position.x, transform.position.y + 0.3f, 0f), Quaternion.Euler(new Vector3(0f, 0f, 0f))) as HealthBar;
+        SelectEnemySprite();
+        //Debug.Log("aw4ger");
+        //Debug.Log(framesToUse.Length);
+        healthBar = Instantiate(pfHealthBar, new Vector3(transform.position.x, transform.position.y + 0.1f, 0f), Quaternion.Euler(new Vector3(0f, 0f, 0f)));
+        hb = healthBar.GetComponent<HealthBar>();
+        spriteRenderer = pfEnemy.GetComponent<SpriteRenderer>();
         currentState = RoamingState;
         currentState.EnterState(this);
         health = 10;
         maxHealth = 10;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Debug.Log((float)health / (float)maxHealth);
         timer += Time.deltaTime;
+        spriteTimer += Time.deltaTime;
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         directionToPlayer = (player.transform.position - transform.position);
         currentState.UpdateState(this);
-        healthBar.UpdateBar(health, maxHealth);
+        hb.UpdateBar(health, maxHealth);
+        healthBar.transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, 0f);
         if ((float) health / (float) maxHealth <= 0.2 && !switchedToLowHealth)
         {
             Debug.Log("switchthingy");
@@ -51,7 +64,9 @@ public class EnemyMaster : MonoBehaviour
         if (health == 0)
         {
             Debug.Log("die");
+            Destroy(this);
         }
+        Draw();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -67,5 +82,51 @@ public class EnemyMaster : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this, posPass);
+    }
+    private void SelectEnemySprite()
+    {
+        int selectedEnemySprite = Random.Range(0, 3);
+        switch(selectedEnemySprite)
+        {
+            case 0:
+                framesToUse = EnemySprite1;
+                break;
+            case 1:
+                framesToUse = EnemySprite2;
+                break;
+            case 2:
+                framesToUse = EnemySprite3;
+                break;
+            default:
+                break;
+        }
+    }
+    private void Draw()
+    {
+        if (currentState != AttackState && health > 0)
+        {
+            if (spriteTimer >= 0.15f)
+            {
+                timer -= 0.15f;
+                currentFrame = (currentFrame % 2) + 1;
+                if (player.transform.position.x > transform.position.x)
+                {
+                    spriteRenderer.flipX = true;
+                }
+                else
+                {
+                    spriteRenderer.flipX = false;
+                }
+            }
+        }
+        else if (currentState == AttackState && health > 0)
+        {
+            currentFrame = 0;
+        }
+        else
+        {
+            currentFrame = 3;
+        }
+        spriteRenderer.sprite = framesToUse[currentFrame];
     }
 }

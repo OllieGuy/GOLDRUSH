@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class pfGenericDecorationScript : MonoBehaviour
+public class pfAnchorPoint : MonoBehaviour
 {
     [SerializeField] private Sprite[] ObjectSprite;
     public SpriteRenderer spriteRenderer;
@@ -12,8 +12,15 @@ public class pfGenericDecorationScript : MonoBehaviour
         int selectedSprite = Random.Range(0, ObjectSprite.Length);
         spriteRenderer.sprite = ObjectSprite[selectedSprite];
     }
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "Bullet")
+        {
+            Debug.Log("dinggg");
+        }
+        if (collision.tag == "Player")
+        {
+            Debug.Log("Player touch gold");
+        }
     }
 }

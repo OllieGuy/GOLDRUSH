@@ -17,7 +17,7 @@ public class EnemyRetreat : EnemyAbstract
     {
         if (enemy.distanceToPlayer <= 1.5f)
         {
-            Debug.Log(enemy.distanceToPlayer);
+            //Debug.Log(enemy.distanceToPlayer);
             enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.transform.position, enemy.speed * Time.deltaTime);
             enemy.timer = 0f;
         }

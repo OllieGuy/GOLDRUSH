@@ -10,7 +10,7 @@ public class CrosshairMechanics : MonoBehaviour
 {
     [SerializeField] private Sprite[] crosshairs;
     [SerializeField] private Transform pfBullet;
-    private RaycastHit hitObject;
+    //private RaycastHit hitObject;
     private int levelLayer;
     private bool available;
     public GameObject Player;
