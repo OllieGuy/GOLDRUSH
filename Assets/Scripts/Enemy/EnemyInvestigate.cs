@@ -9,7 +9,7 @@ public class EnemyInvestigate : EnemyAbstract
     }
     public override void EnterState(EnemyMaster enemy, Vector2 interestedLocation)
     {
-        Debug.Log("switched to investigate");
+        Debug.Log("Switched to investigate");
         enemy.speed = 0.3f;
         enemy.targetPos = interestedLocation;
     }

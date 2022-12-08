@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Bullet
   - Interest
+  - Anchor
+  - EnemyBullet
+  - Gold
+  - GoldPile
   layers:
   - Default
   - TransparentFX

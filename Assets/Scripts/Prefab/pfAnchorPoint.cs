@@ -11,16 +11,14 @@ public class pfAnchorPoint : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         int selectedSprite = Random.Range(0, ObjectSprite.Length);
         spriteRenderer.sprite = ObjectSprite[selectedSprite];
+        tag = "GoldPile";
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Bullet")
         {
             Debug.Log("dinggg");
-        }
-        if (collision.tag == "Player")
-        {
-            Debug.Log("Player touch gold");
+            Destroy(collision.gameObject);
         }
     }
 }

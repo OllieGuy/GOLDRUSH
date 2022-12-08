@@ -5,7 +5,7 @@ public class EnemyRetreat : EnemyAbstract
 {
     public override void EnterState(EnemyMaster enemy)
     {
-        Debug.Log("switched to retreat");
+        Debug.Log("Switched to retreat");
         enemy.speed = -0.4f;
         enemy.timer = 0f;
     }

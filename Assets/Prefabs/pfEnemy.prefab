@@ -52,12 +52,17 @@ MonoBehaviour:
   timer: 0
   speed: 0.5
   distanceToPlayer: 0
+  shootSpeed: 1
+  reloadSpeed: 0.5
+  shootDistance: 0.7
   directionToPlayer: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   anchorPoint: {fileID: 0}
   player: {fileID: 2898364337937971596, guid: 7ad9eab01a03fdc43b4b874b1a33e582, type: 3}
   pfHealthBar: {fileID: 7490637409247095976, guid: 96be713fb65b99c49a7865da57360e94, type: 3}
   pfEnemy: {fileID: 7965098037997872597}
+  pfBullet: {fileID: 2208503610792825338, guid: c3e88ef658459c742a654820ffbce51d, type: 3}
+  pfGoldBar: {fileID: 2624795011410827772, guid: 569ec3d2f5e15af4f878cddee5df926e, type: 3}
   healthBar: {fileID: 0}
   hb: {fileID: 0}
   EnemySprite1:

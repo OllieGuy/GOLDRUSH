@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyRoam : EnemyAbstract
@@ -5,7 +6,7 @@ public class EnemyRoam : EnemyAbstract
     private float randomVariationFromAnchor = 1f;
     public override void EnterState(EnemyMaster enemy)
     {
-        Debug.Log("switched to roam");
+        Debug.Log("Switched to roam");
         enemy.speed = 0.2f;
         enemy.timer = 0f;
         enemy.targetPos = new Vector2(Random.Range(enemy.player.transform.position.x - randomVariationFromAnchor * 10, enemy.player.transform.position.x + randomVariationFromAnchor * 10), Random.Range(enemy.player.transform.position.y - randomVariationFromAnchor * 10, enemy.player.transform.position.y + randomVariationFromAnchor * 10));
@@ -36,10 +37,15 @@ public class EnemyRoam : EnemyAbstract
         {
             //Debug.Log("owww");
             enemy.health--;
+            enemy.destroyBullet(collision.gameObject);
         }
         if (collision.tag == "Interest")
         {
             enemy.SwitchState(enemy.InvestiState, collision.transform.position);
+        }
+        if (collision.tag == "Player")
+        {
+            enemy.SwitchState(enemy.AttackState);
         }
     }
 }

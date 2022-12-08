@@ -8,11 +8,15 @@ public class Player : MonoBehaviour
     public string facingCamera;
     public bool idle;
     public int health;
+    public int gold = 0;
+    public BoxCollider2D characterHitbox;
     public Vector2 location;
     void Start()
     {
+        characterHitbox = GetComponent<BoxCollider2D>();
         facingCamera = "sideR";
         idle = false;
+        health = 3;
     }
 
     // Update is called once per frame
@@ -51,5 +55,25 @@ public class Player : MonoBehaviour
         //pos = pos.normalized;
         transform.position = pos;
         location = pos;
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "EnemyBullet" && collision.IsTouching(characterHitbox))
+        {
+            health -= 1;
+            Debug.Log(health);
+        }
+        if (collision.tag == "GoldPile" && collision.IsTouching(characterHitbox))
+        {
+            gold = gold + 5;
+            Destroy(collision.gameObject);
+            Debug.Log(gold);
+        }
+        if (collision.tag == "Gold" && collision.IsTouching(characterHitbox))
+        {
+            gold += 1;
+            Destroy(collision.gameObject);
+            Debug.Log(gold);
+        }
     }
 }

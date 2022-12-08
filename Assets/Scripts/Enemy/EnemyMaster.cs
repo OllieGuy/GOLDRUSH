@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,17 @@ public class EnemyMaster : MonoBehaviour
     public float timer;
     public float speed = 0.5f;
     public float distanceToPlayer;
+    public float shootSpeed = 1f;
+    public float reloadSpeed = 0.5f;
+    public float shootDistance = 0.7f;
     public Vector2 directionToPlayer;
     public Vector2 targetPos;
     public GameObject anchorPoint;
     public GameObject player;
     public GameObject pfHealthBar;
     public GameObject pfEnemy;
+    public GameObject pfBullet;
+    public GameObject pfGoldBar;
     public GameObject healthBar;
     public HealthBar hb;
     [SerializeField] public Sprite[] EnemySprite1;
@@ -34,8 +40,6 @@ public class EnemyMaster : MonoBehaviour
     void Start()
     {
         SelectEnemySprite();
-        //Debug.Log("aw4ger");
-        //Debug.Log(framesToUse.Length);
         healthBar = Instantiate(pfHealthBar, new Vector3(transform.position.x, transform.position.y + 0.1f, 0f), Quaternion.Euler(new Vector3(0f, 0f, 0f)));
         hb = healthBar.GetComponent<HealthBar>();
         spriteRenderer = pfEnemy.GetComponent<SpriteRenderer>();
@@ -47,7 +51,8 @@ public class EnemyMaster : MonoBehaviour
 
     void Update()
     {
-        Debug.Log((float)health / (float)maxHealth);
+        //Debug.Log((float)health / (float)maxHealth);
+        //Debug.Log(anchorPoint.transform.position);
         timer += Time.deltaTime;
         spriteTimer += Time.deltaTime;
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
@@ -55,7 +60,7 @@ public class EnemyMaster : MonoBehaviour
         currentState.UpdateState(this);
         hb.UpdateBar(health, maxHealth);
         healthBar.transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, 0f);
-        if ((float) health / (float) maxHealth <= 0.2 && !switchedToLowHealth)
+        if ((float)health / (float)maxHealth <= 0.2 && !switchedToLowHealth)
         {
             Debug.Log("switchthingy");
             switchedToLowHealth = true;
@@ -71,7 +76,10 @@ public class EnemyMaster : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        currentState.OnCollisionEnter(this, collision);
+        if (this != null && collision != null)
+        {
+            currentState.OnCollisionEnter(this, collision);
+        }
     }
     public void SwitchState(EnemyAbstract state)
     {
@@ -85,8 +93,8 @@ public class EnemyMaster : MonoBehaviour
     }
     private void SelectEnemySprite()
     {
-        int selectedEnemySprite = Random.Range(0, 3);
-        switch(selectedEnemySprite)
+        int selectedEnemySprite = UnityEngine.Random.Range(0, 3);
+        switch (selectedEnemySprite)
         {
             case 0:
                 framesToUse = EnemySprite1;
@@ -107,15 +115,15 @@ public class EnemyMaster : MonoBehaviour
         {
             if (spriteTimer >= 0.15f)
             {
-                timer -= 0.15f;
+                spriteTimer -= 0.15f;
                 currentFrame = (currentFrame % 2) + 1;
                 if (player.transform.position.x > transform.position.x)
                 {
-                    spriteRenderer.flipX = true;
+                    spriteRenderer.flipX = false;
                 }
                 else
                 {
-                    spriteRenderer.flipX = false;
+                    spriteRenderer.flipX = true;
                 }
             }
         }
@@ -126,7 +134,22 @@ public class EnemyMaster : MonoBehaviour
         else
         {
             currentFrame = 3;
+            Instantiate(pfGoldBar, new Vector2 (transform.position.x, transform.position.y + 0.16f), transform.rotation);
+            Destroy(healthBar);
+            Destroy(this);
         }
         spriteRenderer.sprite = framesToUse[currentFrame];
+    }
+    public void destroyBullet(GameObject bullet)
+    {
+        Destroy(bullet);
+    }
+    public void shootBullet()
+    {
+        GameObject bullet = Instantiate(pfBullet, transform.position, transform.rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        Vector3 shootDirection = player.transform.position - transform.position;
+        shootDirection.Normalize();
+        rb.velocity = shootDirection * shootSpeed;
     }
 }

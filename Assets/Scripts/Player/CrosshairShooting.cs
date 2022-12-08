@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CrosshairMechanics : MonoBehaviour
+public class CrosshairShooting : MonoBehaviour
 {
     [SerializeField] private Sprite[] crosshairs;
     [SerializeField] private Transform pfBullet;
