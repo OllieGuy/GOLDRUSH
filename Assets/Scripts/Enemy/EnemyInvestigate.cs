@@ -32,7 +32,6 @@ public class EnemyInvestigate : EnemyAbstract
     {
         if (collision.tag == "Bullet")
         {
-            //Debug.Log("owww");
             enemy.health--;
         }
         if (collision.tag == "Interest")

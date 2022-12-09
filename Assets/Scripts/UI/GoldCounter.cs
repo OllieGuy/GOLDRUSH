@@ -11,11 +11,14 @@ public class GoldCounter : MonoBehaviour
     void Start()
     {
         text = gameObject.GetComponent<Text>();
+        if (player == null)
+        {
+            player = SceneManagerScript.player;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        text.text = player.gold.ToString();
+        text.text = SceneManagerScript.gold.ToString();
     }
 }

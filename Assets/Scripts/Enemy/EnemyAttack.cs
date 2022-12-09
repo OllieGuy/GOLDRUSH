@@ -8,13 +8,12 @@ public class EnemyAttack : EnemyAbstract
     private Rigidbody rb;
     public override void EnterState(EnemyMaster enemy)
     {
-        Debug.Log("Switched to attack");
         enemy.speed = 0.3f;
         enemy.timer = 0f;
     }
     public override void EnterState(EnemyMaster enemy, Vector2 interestedLocation)
     {
-        Debug.Log("switched to attack, but somehow the wrong way");
+        Debug.Log("Error: shouldn't have switched to attack with interest");
     }
     public override void UpdateState(EnemyMaster enemy)
     {
@@ -45,7 +44,6 @@ public class EnemyAttack : EnemyAbstract
     {
         if (collision.tag == "Bullet")
         {
-            //Debug.Log("owww");
             enemy.health--;
             enemy.destroyBullet(collision.gameObject);
         }

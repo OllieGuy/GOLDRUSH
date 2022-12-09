@@ -5,7 +5,6 @@ public class EnemyRetreat : EnemyAbstract
 {
     public override void EnterState(EnemyMaster enemy)
     {
-        Debug.Log("Switched to retreat");
         enemy.speed = -0.4f;
         enemy.timer = 0f;
     }
@@ -17,7 +16,6 @@ public class EnemyRetreat : EnemyAbstract
     {
         if (enemy.distanceToPlayer <= 1.5f)
         {
-            //Debug.Log(enemy.distanceToPlayer);
             enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.transform.position, enemy.speed * Time.deltaTime);
             enemy.timer = 0f;
         }
@@ -28,7 +26,6 @@ public class EnemyRetreat : EnemyAbstract
         }
         else
         {
-            Debug.Log("goodbye");
             enemy.SwitchState(enemy.RoamingState);
         }
     }
@@ -37,7 +34,6 @@ public class EnemyRetreat : EnemyAbstract
     {
         if (collision.tag == "Bullet")
         {
-            //Debug.Log("owww");
             enemy.health--;
         }
     }

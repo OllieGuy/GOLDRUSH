@@ -8,11 +8,11 @@ public class Player : MonoBehaviour
     public string facingCamera;
     public bool idle;
     public int health;
-    public int gold = 0;
     public BoxCollider2D characterHitbox;
     public Vector2 location;
     void Start()
     {
+        SceneManagerScript.gold = 0;
         characterHitbox = GetComponent<BoxCollider2D>();
         facingCamera = "sideR";
         idle = false;
@@ -51,8 +51,7 @@ public class Player : MonoBehaviour
         {
             idle = true;
         }
-        //Debug.Log(pos);
-        //pos = pos.normalized;
+        SceneManagerScript.CheckIfGoldLeft();
         transform.position = pos;
         location = pos;
     }
@@ -61,19 +60,17 @@ public class Player : MonoBehaviour
         if (collision.tag == "EnemyBullet" && collision.IsTouching(characterHitbox))
         {
             health -= 1;
-            Debug.Log(health);
+            Destroy(collision.gameObject);
         }
         if (collision.tag == "GoldPile" && collision.IsTouching(characterHitbox))
         {
-            gold = gold + 5;
+            SceneManagerScript.gold += 5;
             Destroy(collision.gameObject);
-            Debug.Log(gold);
         }
         if (collision.tag == "Gold" && collision.IsTouching(characterHitbox))
         {
-            gold += 1;
+            SceneManagerScript.gold += 1;
             Destroy(collision.gameObject);
-            Debug.Log(gold);
         }
     }
 }

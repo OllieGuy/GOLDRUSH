@@ -29,9 +29,9 @@ public class EnemyMaster : MonoBehaviour
     public GameObject pfGoldBar;
     public GameObject healthBar;
     public HealthBar hb;
-    [SerializeField] public Sprite[] EnemySprite1;
-    [SerializeField] public Sprite[] EnemySprite2;
-    [SerializeField] public Sprite[] EnemySprite3;
+    [SerializeField] private Sprite[] EnemySprite1;
+    [SerializeField] private Sprite[] EnemySprite2;
+    [SerializeField] private Sprite[] EnemySprite3;
     private int currentFrame = 0;
     private SpriteRenderer spriteRenderer;
     private Sprite[] framesToUse = null;
@@ -51,8 +51,6 @@ public class EnemyMaster : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log((float)health / (float)maxHealth);
-        //Debug.Log(anchorPoint.transform.position);
         timer += Time.deltaTime;
         spriteTimer += Time.deltaTime;
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
@@ -76,9 +74,13 @@ public class EnemyMaster : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (this != null && collision != null)
+        try
         {
             currentState.OnCollisionEnter(this, collision);
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log(e);
         }
     }
     public void SwitchState(EnemyAbstract state)
@@ -111,9 +113,13 @@ public class EnemyMaster : MonoBehaviour
     }
     private void Draw()
     {
-        if (currentState != AttackState && health > 0)
+        if (health > 0)
         {
-            if (spriteTimer >= 0.15f)
+            if (targetPos == new Vector2(transform.position.x, transform.position.y))
+            {
+                currentFrame = 0;
+            }
+            else if (spriteTimer >= 0.15f)
             {
                 spriteTimer -= 0.15f;
                 currentFrame = (currentFrame % 2) + 1;
@@ -127,14 +133,11 @@ public class EnemyMaster : MonoBehaviour
                 }
             }
         }
-        else if (currentState == AttackState && health > 0)
-        {
-            currentFrame = 0;
-        }
         else
         {
             currentFrame = 3;
             Instantiate(pfGoldBar, new Vector2 (transform.position.x, transform.position.y + 0.16f), transform.rotation);
+            SceneManagerScript.enemyTotal--;
             Destroy(healthBar);
             Destroy(this);
         }

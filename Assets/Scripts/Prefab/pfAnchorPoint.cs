@@ -17,7 +17,7 @@ public class pfAnchorPoint : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
-            Debug.Log("dinggg");
+            //Debug.Log("dinggg");
             Destroy(collision.gameObject);
         }
     }

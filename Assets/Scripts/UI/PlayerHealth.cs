@@ -16,5 +16,10 @@ public class PlayerHealth : MonoBehaviour
         Sprite frameToUse;
         frameToUse = healthSprites[3 - player.health];
         spriteRenderer.sprite = frameToUse;
+        if (player.health <= 0)
+        {
+            SceneManagerScript.player = player;
+            SceneManagerScript.PlayerDeath();
+        }
     }
 }

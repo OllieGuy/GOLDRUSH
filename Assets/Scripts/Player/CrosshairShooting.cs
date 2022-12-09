@@ -10,7 +10,6 @@ public class CrosshairShooting : MonoBehaviour
 {
     [SerializeField] private Sprite[] crosshairs;
     [SerializeField] private Transform pfBullet;
-    //private RaycastHit hitObject;
     private int levelLayer;
     private bool available;
     public GameObject Player;
@@ -32,7 +31,7 @@ public class CrosshairShooting : MonoBehaviour
         checkShootable(playerCurrentpos, diffInPos);
         if (Input.GetMouseButtonDown(0))
         {
-            shoot(playerCurrentpos, diffInPos);
+            shoot(playerCurrentpos);
         }
     }
     void checkShootable(Vector2 playerCurrentpos, Vector2 diffInPos)
@@ -53,10 +52,9 @@ public class CrosshairShooting : MonoBehaviour
             available = false;
         }
     }
-    void shoot(Vector2 playerCurrentpos, Vector2 diffInPos)
+    void shoot(Vector2 playerCurrentpos)
     {
         float force = 2f;
-        //UnityEngine.Debug.Log("bang");
         GameObject newBullet = Instantiate(pfBullet, playerCurrentpos, Quaternion.Euler(new Vector3(0f, 0f, Gunno.returnAng()))).GameObject();
         Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
         rb.AddForce(newBullet.transform.up * force, ForceMode2D.Impulse);
