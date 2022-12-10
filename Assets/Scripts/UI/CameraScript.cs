@@ -19,13 +19,15 @@ public class CameraScript : MonoBehaviour
         cam.transform.position = viewPos;
     }
 
-    void LateUpdate()
+    void LateUpdate() //moves the camera just after the player
     {
+        //sets the bounds of the current position
         bounds[0] = currentCentre.x - boundMargin[0];
         bounds[1] = currentCentre.x + boundMargin[0];
         bounds[2] = currentCentre.y + boundMargin[1];
         bounds[3] = currentCentre.y - boundMargin[1];
         viewPos.z = -10;
+        //when the player reaches a bound of the playable area on the screen, reset the bounds to the new position and move the camera
         if (player.transform.position.x < bounds[0])
         {
             currentCentre.x -= (bounds[0] - player.transform.position.x);

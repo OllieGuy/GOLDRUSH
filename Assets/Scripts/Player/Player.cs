@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float speed = 0.5f;
+    private float speed = 0.5f; //player speed
     public string facingCamera;
     public bool idle;
     public int health;
@@ -12,18 +12,19 @@ public class Player : MonoBehaviour
     public Vector2 location;
     void Start()
     {
-        SceneManagerScript.gold = 0;
+        SceneManagerScript.gold = 0; //when the game starts, gold is set to 0
+        SceneManagerScript.win = false; //the player hasn't won... yet!
         characterHitbox = GetComponent<BoxCollider2D>();
-        facingCamera = "sideR";
+        facingCamera = "sideR"; //the default frames are the player facing to the right before they do anything. Why, you ask? I just thought it looked the best
         idle = false;
         health = 3;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 pos = transform.position;
-        if (Input.GetKey("w"))
+        //when the player press the WSAD keys, move them in the corresponding direction
+        if (Input.GetKey("w")) 
         {
             pos.y += speed * Time.deltaTime;
             facingCamera = "back";
@@ -45,18 +46,19 @@ public class Player : MonoBehaviour
         }
         if (Input.anyKey)
         {
-            idle = false;
+            idle = false; //this does make it activate the walking frames when the player is shooting, but it works otherwise
         }
         else
         {
             idle = true;
         }
-        SceneManagerScript.CheckIfGoldLeft();
+        SceneManagerScript.CheckIfGoldLeft(); //makes sure the game isnt over
         transform.position = pos;
         location = pos;
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision) //looks at what the player is touching if a hitbox is hit
     {
+        //uses characherHitbox, since there is a larger circular hitbox that the enemies detect
         if (collision.tag == "EnemyBullet" && collision.IsTouching(characterHitbox))
         {
             health -= 1;

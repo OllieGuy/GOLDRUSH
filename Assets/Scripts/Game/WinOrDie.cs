@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class WinOrDie : MonoBehaviour
 {
-    private GameObject textToDisplay;
-    void Start()
+    void Start() //called on the end screen to figure out if the player has won or lost
     {
         GameObject winText = GameObject.Find("You Win!");
-        GameObject loseText = GameObject.Find("You Died!");
+        GameObject loseText = GameObject.Find("You Died");
         if (SceneManagerScript.win)
         {
             winText.SetActive(true);

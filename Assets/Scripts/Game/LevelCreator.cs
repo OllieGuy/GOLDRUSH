@@ -18,18 +18,19 @@ public class LevelCreator : MonoBehaviour
     private int maxEnemiesPerPile = 5;
     void Start()
     {
+        //take in the values assigned from the menu through the manager
         spaceToFill = SceneManagerScript.spaceToFill;
         enemyBufferSpace = SceneManagerScript.enemyBufferSpace;
         amountOfRandomObjects = SceneManagerScript.amountOfRandomObjects;
         amountOfGoldPiles = SceneManagerScript.amountOfGoldPiles;
         maxEnemiesPerPile = SceneManagerScript.maxEnemiesPerPile;
-        pepperLevelDecorations();
+        pepperLevelDecorations(); //puts in the decorative items
         placeAnchorPointsAndEnemies();
     }
     private void pepperLevelDecorations()
     {
         GameObject[] gameObjects = { Cactus, Rock, Stick };
-        for (int i = 0; i < amountOfRandomObjects; i++)
+        for (int i = 0; i < amountOfRandomObjects; i++) //places a random object in a random position in the space to fill
         {
             var position = new Vector2(Random.Range(-spaceToFill, spaceToFill), Random.Range(-spaceToFill, spaceToFill));
             int selectedObj = Random.Range(0, gameObjects.Length);
@@ -38,7 +39,8 @@ public class LevelCreator : MonoBehaviour
     }
     private void placeAnchorPointsAndEnemies()
     {
-        for (int i = 0; i < amountOfGoldPiles; i++)
+        SceneManagerScript.enemyTotal = 0;
+        for (int i = 0; i < amountOfGoldPiles; i++) //places a gold pile (anchor) in a random position in the space to fill, then places enemies around it
         {
             var position = new Vector2(Random.Range(-spaceToFill, spaceToFill), Random.Range(-spaceToFill, spaceToFill));
             GameObject Anchor = Instantiate(AnchorPoint, position, Quaternion.identity);

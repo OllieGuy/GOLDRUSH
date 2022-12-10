@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    private void Update()
+    private void Update() //change the health UI elements in accordance with the player's current health
     {
         Sprite frameToUse;
         frameToUse = healthSprites[3 - player.health];
@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
         if (player.health <= 0)
         {
             SceneManagerScript.player = player;
-            SceneManagerScript.PlayerDeath();
+            SceneManagerScript.PlayerDeath(); //player has died, so play the end screen
         }
     }
 }

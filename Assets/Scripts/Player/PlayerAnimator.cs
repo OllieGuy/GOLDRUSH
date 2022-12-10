@@ -19,7 +19,7 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void Update()
     {
-        Sprite[] framesToUse;
+        Sprite[] framesToUse; //uses a temporary variable to pass the right set of frames to the draw script
         if (player.facingCamera == "front")
         {
             framesToUse = framesFront;
@@ -33,13 +33,12 @@ public class PlayerAnimator : MonoBehaviour
             framesToUse = framesSide;
         }
         Draw(framesToUse);
-        transform.position = player.location;
+        transform.position = player.location; //the position of the sprite is set to the player
     }
     private void Draw(Sprite[] frames)
     {
-        //Debug.Log(player.idle);
-        timer += Time.deltaTime;
-        if (player.idle)
+        timer += Time.deltaTime; //uses a timer to change the frames
+        if (player.idle) //if the player isnt doing anything, play the idle animation of the current set of frames
         {
             if (timer >= 0.75f)
             {
@@ -48,7 +47,7 @@ public class PlayerAnimator : MonoBehaviour
                 spriteRenderer.sprite = frames[currentFrame];
             }
         }
-        else
+        else //if the player is doing something, play the movement animation of the current set of frames
         {
             if (timer >= 0.15f)
             {
@@ -56,7 +55,7 @@ public class PlayerAnimator : MonoBehaviour
                 currentFrame = (currentFrame + 1) % 2;
                 if (player.facingCamera == "sideR")
                 {
-                    spriteRenderer.flipX = true;
+                    spriteRenderer.flipX = true; //makes the player turn towards the right if they are going right, rather than using a different set of frames
                 }
                 else
                 {

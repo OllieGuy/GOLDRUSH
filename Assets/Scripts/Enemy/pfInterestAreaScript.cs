@@ -10,7 +10,7 @@ public class pfInterestAreaScript : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 1f)
+        if (timer > 1f) //the interest exists for one second so that an enemy passing through the area just after can also pick up on it
         {
             Destroy(InterestArea);
         }

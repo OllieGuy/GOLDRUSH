@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    //sets up the variables that need to be accessed by a number of scripts, including the menu and level creator
     public GameObject options;
     public static Player player;
     public static int gold = 0;
@@ -15,7 +16,7 @@ public class SceneManagerScript : MonoBehaviour
     public static int amountOfRandomObjects = 50;
     public static int amountOfGoldPiles = 4;
     public static int maxEnemiesPerPile = 5;
-    public static int enemyTotal = 0;
+    public static int enemyTotal = 0; //enemy total needs to be reset between plays, so it is set here
     private void Start()
     {
         if (options != null)
@@ -25,14 +26,14 @@ public class SceneManagerScript : MonoBehaviour
     }
     public void StartGame()
     {
-        options.SetActive(true);
+        options.SetActive(true); //activate the options so that they can be passed into the level creator
         UpdateOptions();
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game"); //load the main game
     }
     public void QuitGame()
     {
         Debug.Log("Quitting");
-        Application.Quit();
+        Application.Quit(); //shut the game
     }
     public static void Menu()
     {
@@ -45,7 +46,7 @@ public class SceneManagerScript : MonoBehaviour
     }
     public void Options()
     {
-        if (options.active)
+        if (options.activeInHierarchy) //makes the options pannel toggleable
         {
             options.SetActive(false);
         }
@@ -54,7 +55,7 @@ public class SceneManagerScript : MonoBehaviour
             options.SetActive(true);
         }
     }
-    public void UpdateOptions()
+    public void UpdateOptions() //sets the values to those assigned in the options pannel
     {
         Slider spaceToFillSlider = GameObject.Find("spaceToFillSlider").GetComponent<Slider>();
         spaceToFill = spaceToFillSlider.value;
@@ -67,7 +68,7 @@ public class SceneManagerScript : MonoBehaviour
         Slider maxEnemiesPerPileSlider = GameObject.Find("maxEnemiesPerPileSlider").GetComponent<Slider>();
         maxEnemiesPerPile = (int)maxEnemiesPerPileSlider.value;
     }
-    public static bool CheckIfGoldLeft()
+    public static bool CheckIfGoldLeft() //checks if there is the potential for the player to get any more gold, if not, the player wins the game and it goes to the end screen
     {
         if (GameObject.Find("pfAnchorPoint(Clone)") == null && GameObject.Find("pfGoldBar(Clone)") == null && enemyTotal == 0)
         {

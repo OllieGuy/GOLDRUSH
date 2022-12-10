@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class pfAnchorPoint : MonoBehaviour
 {
+    //select a random sprite from the given set of sprites for a decoration object
     [SerializeField] private Sprite[] ObjectSprite;
     public SpriteRenderer spriteRenderer;
     void Start()
@@ -13,11 +14,10 @@ public class pfAnchorPoint : MonoBehaviour
         spriteRenderer.sprite = ObjectSprite[selectedSprite];
         tag = "GoldPile";
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //stop bullets
     {
         if (collision.tag == "Bullet")
         {
-            //Debug.Log("dinggg");
             Destroy(collision.gameObject);
         }
     }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class EnemyRoam : EnemyAbstract
 {
-    private float randomVariationFromAnchor = 1f;
-    public override void EnterState(EnemyMaster enemy)
+    private float randomVariationFromAnchor = 1f; //how far an enemy will roam from the anchor
+    public override void EnterState(EnemyMaster enemy) //the first anchor is always near the player in case the anchor has been destroyed
     {
         enemy.speed = 0.2f;
         enemy.timer = 0f;
@@ -18,11 +18,11 @@ public class EnemyRoam : EnemyAbstract
     {
         if (enemy.timer >= 4.0f)
         {
-            if (enemy.anchorPoint != null)
+            if (enemy.anchorPoint != null) //when the anchor exists
             {
                 enemy.targetPos = new Vector2(Random.Range(enemy.anchorPoint.transform.position.x - randomVariationFromAnchor, enemy.anchorPoint.transform.position.x + randomVariationFromAnchor), Random.Range(enemy.anchorPoint.transform.position.y - randomVariationFromAnchor, enemy.anchorPoint.transform.position.y + randomVariationFromAnchor));
             }
-            else
+            else //when the anchor is destoryed
             {
                 enemy.targetPos = new Vector2(Random.Range(enemy.player.transform.position.x - randomVariationFromAnchor * 10, enemy.player.transform.position.x + randomVariationFromAnchor * 10), Random.Range(enemy.player.transform.position.y - randomVariationFromAnchor * 10, enemy.player.transform.position.y + randomVariationFromAnchor * 10));
             }
