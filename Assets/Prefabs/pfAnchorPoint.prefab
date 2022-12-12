@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8522093165598871679}
   - component: {fileID: 8522093165598871678}
   - component: {fileID: 8522093165598871674}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfAnchorPoint
   m_TagString: Anchor
   m_Icon: {fileID: 0}
